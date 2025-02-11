@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package io.github.mmafrar.demo.model;
 
 import lombok.Getter;
 import lombok.Setter;

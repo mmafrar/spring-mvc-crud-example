@@ -1,6 +1,6 @@
-package com.example.demo.repository;
+package io.github.mmafrar.demo.repository;
 
-import com.example.demo.model.Contact;
+import io.github.mmafrar.demo.model.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

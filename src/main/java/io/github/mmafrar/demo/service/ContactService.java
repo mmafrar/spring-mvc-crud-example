@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package io.github.mmafrar.demo.service;
 
-import com.example.demo.model.Contact;
-import com.example.demo.repository.ContactRepository;
+import io.github.mmafrar.demo.model.Contact;
+import io.github.mmafrar.demo.repository.ContactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
