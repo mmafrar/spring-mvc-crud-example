@@ -1,11 +1,14 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.18'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'org.jreleaser' version '1.16.0'
+	id 'maven-publish'
+	id 'java-library'
 	id 'java'
 }
 
 group = 'io.github.mmafrar'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1-ALPHA'
 sourceCompatibility = '1.8'
 
 configurations {
@@ -14,8 +17,78 @@ configurations {
 	}
 }
 
+java {
+	withJavadocJar()
+	withSourcesJar()
+}
+
+artifacts {
+	archives bootJar
+	archives sourcesJar
+	archives javadocJar
+}
+
 repositories {
 	mavenCentral()
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			artifactId = 'demo'
+			groupId = 'io.github.mmafrar'
+
+			pom {
+				name = 'Spring MVC CRUD Example'
+				description = 'Implementing Spring Boot MVC CRUD operations with JPA and JSP'
+				url = 'https://github.com/mmafrar/spring-mvc-crud-example'
+
+				licenses {
+					license {
+						name = 'MIT License'
+						url = 'https://github.com/mmafrar/spring-mvc-crud-example/blob/main/LICENSE'
+					}
+				}
+
+				developers {
+					developer {
+						id = 'mmafrar'
+						name = 'Afrar Malakooth'
+					}
+				}
+
+				scm {
+					connection = 'scm:git:https://github.com/mmafrar/spring-mvc-crud-example.git'
+					developerConnection = 'scm:git:ssh://git@github.com:mmafrar/spring-mvc-crud-example.git'
+					url = 'https://github.com/mmafrar/spring-mvc-crud-example'
+				}
+			}
+		}
+	}
+
+	repositories {
+		maven {
+			url = layout.buildDirectory.dir('staging-deploy')
+		}
+	}
+}
+
+jreleaser {
+	signing {
+		active = 'ALWAYS'
+		armored = true
+	}
+	deploy {
+		maven {
+			mavenCentral {
+				sonatype {
+					active = 'ALWAYS'
+					url = 'https://central.sonatype.com/api/v1/publisher'
+					stagingRepository('build/staging-deploy')
+				}
+			}
+		}
+	}
 }
 
 dependencies {
